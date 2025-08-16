@@ -15,12 +15,12 @@ function Run-LimitlessLegacy {
 
     if ($mirror) { 
         # النسخة mirror (ممكن تعمل نسخة تانية على GitHub باسم mirror لو حابب)
-        $url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/refs/heads/main/limitless.ps1' 
+$url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limitless.ps1'
         $params += " -m"
     }
     else {
         # النسخة الرئيسية اللي هتكون رافعها عندك على GitHub
-        $url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/refs/heads/main/limitless.ps1'
+$url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limitless.ps1'    
     }
 
     for ($retry = 1; $retry -le $maxRetryCount; $retry++) {

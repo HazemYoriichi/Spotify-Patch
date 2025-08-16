@@ -14,18 +14,18 @@ function Run-LimitlessLegacy {
     $retryInterval = 5
 
     if ($mirror) { 
-        # النسخة mirror (ممكن تعمل نسخة تانية على GitHub باسم mirror لو حابب)
-$url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limitless.ps1'
+        # النسخة mirror
+        $url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limitless.ps1'
         $params += " -m"
     }
     else {
-        # النسخة الرئيسية اللي هتكون رافعها عندك على GitHub
-$url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limitless.ps1'    
+        # النسخة الرئيسية
+        $url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limitless.ps1'
     }
 
     for ($retry = 1; $retry -le $maxRetryCount; $retry++) {
         try {
-            $response = iwr -useb $url
+            $response = Invoke-WebRequest -Uri $url -UseBasicParsing -ErrorAction Stop
             $StatusCode = $response.StatusCode
         }
         catch {
@@ -33,7 +33,8 @@ $url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limit
         }
 
         if ($StatusCode -eq 200) {
-            iex "& {$($response)} $params"
+            Write-Host "[Limitless Legacy] Downloaded script successfully ✅"
+            iex "& { $($response.Content) } $params"
             return
         }
         else {
@@ -49,5 +50,5 @@ $url = 'https://raw.githubusercontent.com/HazemYoriichi/Spotify-Patch/main/limit
     exit
 }
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12;
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 Run-LimitlessLegacy -params $args
